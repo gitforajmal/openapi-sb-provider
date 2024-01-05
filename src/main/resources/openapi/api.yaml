@@ -1,0 +1,55 @@
+openapi: "3.0.0"
+info:
+  title: OpenApi Server API
+  description: >-
+    Open API Spring Boot Server API
+  version: 1.0.0
+tags:
+  - name: Users
+    description: User Controller
+paths:
+  "/users/{userId}":
+    get:
+      operationId: getUserbyId
+      tags: 
+        - Users
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The id of the user to retrieve
+          schema:
+            type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "500":
+          description: System Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"       
+              
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        userId:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string    
+              

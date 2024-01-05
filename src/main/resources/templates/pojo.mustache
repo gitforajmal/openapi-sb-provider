@@ -1,0 +1,36 @@
+{{#description}}@ApiModel(description = "{{{.}}}"){{/description}}
+{{>generatedAnnotation}}{{>additionalModelTypeAnnotations}}
+@lombok.Builder
+@lombok.Data
+@lombok.AllArgsConstructor
+@lombok.NoArgsConstructor
+public class {{classname}} {{#parent}}extends {{{.}}}{{/parent}} {{#vendorExtensions.x-implements}}{{#-first}}implements {{{.}}}{{/-first}}{{^-first}}, {{{.}}}{{/-first}}{{/vendorExtensions.x-implements}} {
+  {{#vars}}
+    {{#isEnum}}
+    {{^isContainer}}
+{{>enumClass}}
+    {{/isContainer}}
+    {{#isContainer}}
+    {{#mostInnerItems}}
+{{>enumClass}}
+    {{/mostInnerItems}}
+    {{/isContainer}}
+    {{/isEnum}}
+  {{#jackson}}
+  @JsonProperty("{{baseName}}")
+  {{/jackson}}
+  {{#gson}}
+  @SerializedName("{{baseName}}")
+  {{/gson}}
+  {{#isContainer}}
+  private {{{datatypeWithEnum}}} {{name}}{{#required}} = {{{defaultValue}}}{{/required}}{{^required}} = null{{/required}};
+  {{/isContainer}}
+  {{^isContainer}}
+  private {{{datatypeWithEnum}}} {{name}}{{#defaultValue}} = {{{.}}}{{/defaultValue}};
+  {{/isContainer}}
+
+  {{/vars}}
+  
+
+  
+}
